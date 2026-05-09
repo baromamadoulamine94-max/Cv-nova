@@ -1,0 +1,346 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Nova — Générateur de CV Intelligent</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<base target="_blank">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <div class="loader-text">CV NOVA</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-rocket"></i>
+            <span>CV NOVA</span>
+        </div>
+        <div class="nav-links">
+            <button id="theme-toggle" class="nav-btn" title="Mode Clair/Sombre">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="print-btn" class="nav-btn" title="Imprimer">
+                <i class="fas fa-print"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-bg">
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+            <div class="glow-orb orb-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-sparkles"></i>
+                <span>Intelligent & Automatique</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="typing-text"></span><span class="cursor">|</span>
+            </h1>
+            <p class="hero-subtitle">
+                Génère un CV professionnel, moderne et percutant en temps réel. 
+                Zero effort, maximum d'impact.
+            </p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Templates Premium</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">0s</span>
+                    <span class="stat-label">Temps de génération</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Gratuit</span>
+                </div>
+            </div>
+            <button id="start-btn" class="btn-primary">
+                <span>Commencer</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Bar -->
+    <div id="progress-container">
+        <div class="progress-label">Progression de votre CV</div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="progress-percentage">0%</div>
+    </div>
+
+    <!-- Main App -->
+    <main id="app" class="hidden">
+        <!-- Template Selector -->
+        <div class="template-selector">
+            <h3><i class="fas fa-palette"></i> Choisir un thème</h3>
+            <div class="template-buttons">
+                <button class="template-btn active" data-template="dark-pro">
+                    <div class="template-preview dark-preview"></div>
+                    <span>Dark Pro</span>
+                </button>
+                <button class="template-btn" data-template="minimal-white">
+                    <div class="template-preview minimal-preview"></div>
+                    <span>Minimal White</span>
+                </button>
+                <button class="template-btn" data-template="neon-cyber">
+                    <div class="template-preview neon-preview"></div>
+                    <span>Neon Cyber</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="app-container">
+            <!-- Form Section -->
+            <section class="form-section">
+                <div class="form-card glass">
+                    <h2><i class="fas fa-user-edit"></i> Informations</h2>
+                    
+                    <!-- Personal Info -->
+                    <div class="form-group">
+                        <h3><i class="fas fa-id-card"></i> Informations personnelles</h3>
+                        <div class="input-grid">
+                            <div class="input-field">
+                                <label>Nom complet</label>
+                                <input type="text" id="fullName" placeholder="Jean Dupont" autocomplete="name">
+                            </div>
+                            <div class="input-field">
+                                <label>Email</label>
+                                <input type="email" id="email" placeholder="jean@email.com" autocomplete="email">
+                            </div>
+                            <div class="input-field">
+                                <label>Téléphone</label>
+                                <input type="tel" id="phone" placeholder="+33 6 12 34 56 78" autocomplete="tel">
+                            </div>
+                            <div class="input-field">
+                                <label>Adresse</label>
+                                <input type="text" id="address" placeholder="Paris, France" autocomplete="address-level1">
+                            </div>
+                        </div>
+                        <div class="photo-upload" id="photo-upload">
+                            <input type="file" id="photoInput" accept="image/*" hidden>
+                            <div class="upload-zone" id="upload-zone">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Glissez votre photo ou cliquez</span>
+                                <small>PNG, JPG jusqu'à 5MB</small>
+                            </div>
+                            <div class="photo-preview hidden" id="photo-preview">
+                                <img id="preview-img" src="" alt="Photo de profil">
+                                <button class="remove-photo" id="remove-photo"><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile -->
+                    <div class="form-group">
+                        <h3><i class="fas fa-quote-left"></i> Profil</h3>
+                        <div class="input-field">
+                            <label>Description / Bio</label>
+                            <textarea id="bio" rows="4" placeholder="Décrivez votre parcours, vos ambitions et ce qui vous motive..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="form-group">
+                        <h3><i class="fas fa-bolt"></i> Compétences</h3>
+                        <div id="skills-container">
+                            <div class="skill-row">
+                                <input type="text" class="skill-name" placeholder="Compétence (ex: JavaScript)">
+                                <input type="range" class="skill-level" min="0" max="100" value="80">
+                                <span class="skill-value">80%</span>
+                                <button class="btn-remove" onclick="removeSkill(this)"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <button class="btn-add" onclick="addSkill()">
+                            <i class="fas fa-plus"></i> Ajouter une compétence
+                        </button>
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="form-group">
+                        <h3><i class="fas fa-briefcase"></i> Expériences professionnelles</h3>
+                        <div id="experience-container">
+                            <div class="experience-card">
+                                <div class="input-grid">
+                                    <div class="input-field">
+                                        <label>Poste</label>
+                                        <input type="text" class="exp-title" placeholder="Développeur Full Stack">
+                                    </div>
+                                    <div class="input-field">
+                                        <label>Entreprise</label>
+                                        <input type="text" class="exp-company" placeholder="TechCorp">
+                                    </div>
+                                    <div class="input-field">
+                                        <label>Date</label>
+                                        <input type="text" class="exp-date" placeholder="2022 - Présent">
+                                    </div>
+                                </div>
+                                <div class="input-field">
+                                    <label>Description</label>
+                                    <textarea class="exp-desc" rows="3" placeholder="Décrivez vos missions et réalisations..."></textarea>
+                                </div>
+                                <button class="btn-remove-card" onclick="removeExperience(this)">
+                                    <i class="fas fa-trash"></i> Supprimer
+                                </button>
+                            </div>
+                        </div>
+                        <button class="btn-add" onclick="addExperience()">
+                            <i class="fas fa-plus"></i> Ajouter une expérience
+                        </button>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="form-group">
+                        <h3><i class="fas fa-graduation-cap"></i> Études</h3>
+                        <div id="education-container">
+                            <div class="education-card">
+                                <div class="input-grid">
+                                    <div class="input-field">
+                                        <label>Diplôme</label>
+                                        <input type="text" class="edu-degree" placeholder="Master Informatique">
+                                    </div>
+                                    <div class="input-field">
+                                        <label>École</label>
+                                        <input type="text" class="edu-school" placeholder="Université de Paris">
+                                    </div>
+                                    <div class="input-field">
+                                        <label>Année</label>
+                                        <input type="text" class="edu-year" placeholder="2020 - 2022">
+                                    </div>
+                                </div>
+                                <button class="btn-remove-card" onclick="removeEducation(this)">
+                                    <i class="fas fa-trash"></i> Supprimer
+                                </button>
+                            </div>
+                        </div>
+                        <button class="btn-add" onclick="addEducation()">
+                            <i class="fas fa-plus"></i> Ajouter une formation
+                        </button>
+                    </div>
+
+                    <!-- Languages -->
+                    <div class="form-group">
+                        <h3><i class="fas fa-language"></i> Langues</h3>
+                        <div id="languages-container">
+                            <div class="language-row">
+                                <input type="text" class="lang-name" placeholder="Français">
+                                <select class="lang-level">
+                                    <option value="Natif">Natif</option>
+                                    <option value="Courant">Courant</option>
+                                    <option value="Avancé">Avancé</option>
+                                    <option value="Intermédiaire">Intermédiaire</option>
+                                    <option value="Débutant">Débutant</option>
+                                </select>
+                                <button class="btn-remove" onclick="removeLanguage(this)"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <button class="btn-add" onclick="addLanguage()">
+                            <i class="fas fa-plus"></i> Ajouter une langue
+                        </button>
+                    </div>
+
+                    <!-- Portfolio (Bonus) -->
+                    <div class="form-group">
+                        <h3><i class="fas fa-folder-open"></i> Portfolio (optionnel)</h3>
+                        <div class="input-field">
+                            <label>Lien portfolio / LinkedIn</label>
+                            <input type="url" id="portfolio" placeholder="https://monportfolio.com">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Preview Section -->
+            <section class="preview-section">
+                <div class="preview-header">
+                    <h2><i class="fas fa-eye"></i> Prévisualisation</h2>
+                    <button id="download-pdf" class="btn-download">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Télécharger mon CV</span>
+                    </button>
+                </div>
+                
+                <div id="cv-preview" class="cv-preview template-dark-pro">
+                    <div class="cv-container">
+                        <!-- Header -->
+                        <div class="cv-header">
+                            <div class="cv-photo">
+                                <img id="cv-photo-img" src="" alt="" style="display: none;">
+                                <div class="cv-photo-placeholder"><i class="fas fa-user"></i></div>
+                            </div>
+                            <div class="cv-header-info">
+                                <h1 id="cv-name">Votre Nom</h1>
+                                <div class="cv-contact">
+                                    <span id="cv-email"><i class="fas fa-envelope"></i> email@exemple.com</span>
+                                    <span id="cv-phone"><i class="fas fa-phone"></i> +33 6 12 34 56 78</span>
+                                    <span id="cv-address"><i class="fas fa-map-marker-alt"></i> Ville, Pays</span>
+                                    <span id="cv-portfolio" style="display: none;"><i class="fas fa-globe"></i> <a href="#" target="_blank">Portfolio</a></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bio -->
+                        <div class="cv-section" id="cv-bio-section">
+                            <h2><i class="fas fa-user-circle"></i> Profil</h2>
+                            <p id="cv-bio">Votre description apparaîtra ici...</p>
+                        </div>
+
+                        <!-- Skills -->
+                        <div class="cv-section" id="cv-skills-section">
+                            <h2><i class="fas fa-bolt"></i> Compétences</h2>
+                            <div id="cv-skills" class="cv-skills-grid"></div>
+                        </div>
+
+                        <!-- Experience -->
+                        <div class="cv-section" id="cv-experience-section">
+                            <h2><i class="fas fa-briefcase"></i> Expériences</h2>
+                            <div id="cv-experiences"></div>
+                        </div>
+
+                        <!-- Education -->
+                        <div class="cv-section" id="cv-education-section">
+                            <h2><i class="fas fa-graduation-cap"></i> Formation</h2>
+                            <div id="cv-educations"></div>
+                        </div>
+
+                        <!-- Languages -->
+                        <div class="cv-section" id="cv-languages-section">
+                            <h2><i class="fas fa-language"></i> Langues</h2>
+                            <div id="cv-languages" class="cv-languages-grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>CV Nova — Généré avec <i class="fas fa-heart"></i> et de l'intelligence</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+  </html>
